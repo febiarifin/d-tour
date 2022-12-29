@@ -6,7 +6,7 @@
         <div class="container-fluid p-0">
             <div class="card">
                 <div class="card-body">
-                    <a href="postCreate" class="btn btn-primary mb-3">
+                    <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">
                         <span class="align-middle"> <i class="fa-solid fa-plus"></i> Add Post</span></a>
 
                     <table class="table table-bordered">
@@ -25,23 +25,19 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->location }}</td>
-                                <td>{{ $post->category }}</td>
+                                <td>{{ $post->category->name }}</td>
                                 <td><a href="{{ $post->maps_url }}" target="_blank">show</a></td>
                                 <td><a href="{{ url($post->image) }}" target="_blank">show</a></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <form action="postEdit" method="post">
-                                            @method('post')
+                                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary btn-sm">
+                                            <i class="bi bi-pencil-square"></i> Edit
+                                        </a>
+                                        &nbsp;
+                                        <form action="{{ route('posts.destroy', $post->id) }}" method="post">
+                                            @method('delete')
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $post->id }}">
-                                            <button class="btn btn-primary btn-sm" type="submit"><i
-                                                    class="bi bi-pencil-square"></i> Edit</button>
-                                        </form>
 
-                                        <form action="postDelete" method="post">
-                                            @method('post')
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $post->id }}">
                                             <button class="btn btn-danger btn-sm" type="submit"
                                                 onclick="confirmDelete()"><i class="bi bi-trash"></i>
                                                 Delete</button>

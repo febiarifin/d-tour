@@ -10,10 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         $categories= Category::paginate(10);
@@ -22,7 +18,7 @@ class CategoryController extends Controller
             'active'=> 'category',
             'categories'=>$categories,
             'no'=>1,
-            'form'=>'categoryAdd',
+            'form'=>'categories.store',
             'button'=> 'Add',
             'categoryId' => '',
             'categoryName'=>'',
@@ -34,7 +30,7 @@ class CategoryController extends Controller
         $validatedData= $request->validate([
             'name'=>['required','unique:categories']
         ]);
-        
+
         $validatedData['slug'] = Str::slug($validatedData['name']);
         Category::create($validatedData);
         return redirect('categories')->with('success','Category successfully added...');
@@ -48,7 +44,7 @@ class CategoryController extends Controller
             'active'=> 'category',
             'categories'=>$categories,
             'no'=>1,
-            'form'=>'categoryUpdate',
+            'form'=>'categories.update',
             'categoryId' => $request->id,
             'categoryName'=>$request->name,
             'button'=>'Save'
@@ -66,7 +62,6 @@ class CategoryController extends Controller
         $validatedData['name']= $validatedData['name'];
         $validatedData['slug']= Str::slug($validatedData['name']);
 
-        DB::table('posts')->where('category',$category->name)->update(['category'=>$validatedData['name']]);
         $category->update($validatedData);
         return redirect('categories')->with('success','Category successfully updated...');
     }

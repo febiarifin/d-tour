@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ImageHelper;
 use App\Models\Post;
 use App\Models\Category;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
@@ -41,23 +37,23 @@ class PostController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'location' => 'required',
             'maps_url' => 'required',
-            'image' => 'required',
+            'image' => ['required', 'mimes:png,jpg,jpeg', 'max:1024'],
             'description' => 'required'
         ]);
-        
+
         $validatedData['slug']= Str::slug($validatedData['title']);
-        $validatedData['image']= $validatedData['image'];
-        
+        $validatedData['image']= ImageHelper::instance()->upload($request->image, 'post-images');
+
         Post::create($validatedData);
         return redirect('posts')->with('success','Post successfully added...');
     }
 
-    public function edit(Request $request)
+    public function edit($id)
     {
-        $post = Post::findOrFail($request->id);
+        $post = Post::findOrFail($id);
         $categories = Category::all();
         return view('pages.dashboard.post.edit', [
             'title' => 'Edit Post',
@@ -67,23 +63,31 @@ class PostController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $post = Post::findOrFail($request->id);
         $validatedData = $request->validate([
             'title' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'location' => 'required',
             'maps_url' => 'required',
-            'image' => 'required',
+            'image' => [Rule::requiredIf(function () {
+                if (empty($this->request->image)) {
+                    return false;
+                }
+                return true;
+            }), 'mimes:png,jpg,jpeg', 'max:1024'],
             'description' => 'required'
         ]);
-        
+
         $validatedData['slug']= Str::slug($validatedData['title']);
-        $validatedData['image']= $validatedData['image'];
+        if ($request->image) {
+            ImageHelper::instance()->delete($post->image);
+            $validatedData['image'] = ImageHelper::instance()->upload($request->image, 'post-images');
+        }
 
         $post->update($validatedData);
-        return redirect('posts')->with('success','Post successfully updated...');
+        return back()->with('success','Post successfully updated...');
     }
 
     public function destroy(Request $request)

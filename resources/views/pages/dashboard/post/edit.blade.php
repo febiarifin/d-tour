@@ -5,10 +5,10 @@
         <h1 class="h3 mb-3">{{ $title }}</h1>
 
         <div class="container-fluid p-0">
-            <form action="{{ route('postUpdate') }}" method="POST" enctype="multipart/form-data">
-                @method('post')
+            <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+                @method('put')
                 @csrf
-                <input type="hidden" name="id" value="{{ $post->id }}">
+
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <div class="card">
@@ -25,17 +25,17 @@
 
                                 <div class="mb-2">
                                     <label for="">Kategori</label>
-                                    <select class="form-select @error('category') is-invalid @enderror" name="category"
-                                        aria-label="Default select example" required>
+                                    <select class="form-select @error('category_id') is-invalid @enderror"
+                                        name="category_id" aria-label="Default select example" required>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->name }}"
-                                                @if ($category->name === $post->category) selected @endif>
+                                            <option value="{{ $category->id }}"
+                                                @if ($category->id == $post->category->id) selected @endif>
                                                 {{ $category->name }}
                                             </option>
                                         @endforeach
                                     </select>
 
-                                    @error('category')
+                                    @error('category_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -68,13 +68,9 @@
                         <div class="card" style="height: 315px;">
                             <div class="card-body">
                                 <label for="">URL gambar</label>
-                                {{-- <input type="file" name="image" id="image"
+                                <input type="file" name="image" id="image"
                                     class="form-control @error('image') is-invalid @enderror" placeholder="choose file"
-                                    onchange="previewFile()"> --}}
-                                <input type="text" name="image" id="image"
-                                    class="form-control @error('image') is-invalid @enderror"
-                                    placeholder="Pastekan url gambar" onchange="previewFile()"
-                                    value="{{ $post->image }}">
+                                    onchange="previewFile()">
                                 @error('image')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -103,8 +99,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary"><span class="align-middle"> <i
-                            class="fa-solid fa-floppy-disk"></i> Save</span></button>
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-primary"><span class="align-middle"> <i
+                                class="fa-solid fa-floppy-disk"></i> Save</span></button>
+                    &nbsp;
+                    <a href="{{ route('posts') }}" class="btn btn-secondary">Back</a>
+                </div>
             </form>
         </div>
     </main>
@@ -114,11 +114,11 @@
             const file = document.querySelector('#image');
             const filePreview = document.querySelector('.file-preview');
             filePreview.style.display = 'block';
-            // const oFReader = new FileReader();
-            // oFReader.readAsDataURL(file.files[0]);
-            // oFReader.onload = function(oFREvent) {
-            //     filePreview.src = oFREvent.target.result;
-            // }
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(file.files[0]);
+            oFReader.onload = function(oFREvent) {
+                filePreview.src = oFREvent.target.result;
+            }
             filePreview.src = file.value;
         }
     </script>

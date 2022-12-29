@@ -1,4 +1,4 @@
-@extends('layouts.home')
+@extends('layouts.auth')
 
 @section('content')
     <main class="d-flex w-100">

@@ -17,12 +17,12 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->string('category');
             $table->string('location');
             $table->string('maps_url');
             $table->string('image');
             $table->text('description');
             $table->timestamps();
+            $table->foreignId('category_id')->constrained();
         });
     }
 

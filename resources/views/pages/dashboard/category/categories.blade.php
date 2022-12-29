@@ -42,7 +42,7 @@
                                 <td>{{ $category->created_at }}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <form action="categoryEdit" method="post">
+                                        <form action="{{ route('categories.edit') }}" method="post">
                                             @method('post')
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $category->id }}">
@@ -51,7 +51,7 @@
                                                     class="bi bi-pencil-square"></i> Edit</button>
                                         </form>
 
-                                        <form action="categoryDelete" method="post">
+                                        <form action="{{ route('categories.destroy') }}" method="post">
                                             @method('post')
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $category->id }}">
