@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -10,7 +11,7 @@ class DashboardController extends Controller
     {
         return view('pages.dashboard.home',[
             'title'=>'Dashboard',
-            'active'=>'dashboard'
+            'active'=>'dashboard',
         ]);
     }
 

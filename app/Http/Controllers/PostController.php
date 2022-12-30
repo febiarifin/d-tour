@@ -65,7 +65,7 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
-        $post = Post::findOrFail($request->id);
+        $post = Post::findOrFail($id);
         $validatedData = $request->validate([
             'title' => 'required',
             'category_id' => 'required',
