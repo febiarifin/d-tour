@@ -23,6 +23,7 @@ use App\Http\Controllers\PostController;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/post/category/{slug}', [HomeController::class, 'postByCategory'])->name('post.category');
 Route::post('/post/serach', [HomeController::class, 'search'])->name('post.search');
+Route::get('/post/{slug}', [HomeController::class, 'postDetail'])->name('post.detail');
 
 Route::group(['middleware' => 'guest'], function(){
     Route::get('/login',[LoginController::class,'index'])->name('login');

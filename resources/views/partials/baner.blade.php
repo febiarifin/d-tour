@@ -5,7 +5,7 @@
                 <div class="banner-caption">
                     <div class="line-dec"></div>
                     <h2>Explore Destinasi Wisata Wonosobo</h2>
-                    <span>{{ config('app.name') }} adalah sebuah website referensi buat anda untuk mecari destinasi wisata di Wonosobo.</span>
+                    <span>{{ env('APP_DESCRIPTION') }}</span>
                     <div class="blue-button">
                         <a class="scrollTo" data-scrollTo="popular" href="#">Cari Wisata</a>
                     </div>

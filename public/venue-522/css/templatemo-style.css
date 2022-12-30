@@ -28,6 +28,12 @@ section {
   padding-top: 80px;
 }
 
+.comment-box{
+    margin: 50px 50px 50px 50px;
+    padding: 30px;
+    background-color: #e7e7e7;
+    border-radius: 10px;
+}
 
 .section-heading {
   text-align: center;
@@ -71,7 +77,7 @@ section {
 
 /* Header Style */
 
-.cf:before, 
+.cf:before,
 .cf:after {
   content: '';
   display: table;
@@ -692,7 +698,7 @@ section.our-services .service-item h4 {
   border: 1px solid #ddd;
 }
 .accordion li:last-child a {
-  
+
 }
 .accordion li p {
   display: none;
@@ -1058,7 +1064,7 @@ section.contact .section-heading {
   100% {
     top: 0;
     opacity: 1;
-  }  
+  }
 }
 
 @keyframes totop-out {
@@ -1069,7 +1075,7 @@ section.contact .section-heading {
   100% {
     top: -100%;
     opacity: 0;
-  }  
+  }
 }
 
 
@@ -1241,5 +1247,9 @@ footer .contact-info ul li a {
   footer .contact-info {
     margin-top: 60px;
   }
-  
+
+  .comment-box{
+    padding: 10px;
+    }
+
 }

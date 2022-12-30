@@ -16,27 +16,8 @@
         </div>
         <div class="row col-12">
 
-            @foreach ($posts as $post)
-            <div class="col-md-4" style="margin-bottom: 25px;">
-                <div class="featured-item">
-                    <div class="thumb">
-                        <img src="{{ asset($post->image) }}" alt="{{ $post->title }}">
-                    </div>
-                    <div class="down-content">
-                        <h4>{{ $post->title }}</h4>
-                        <span>{{ $post->category->name }}</span>
-                        <p>{{ Str::substr($post->description,0,80) }}...</p>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="text-button">
-                                    <a href="#">Detail Wisata</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
+            @include('partials.postList')
+
         </div>
 
         <div style="margin-top: 50px; text-align:center">
@@ -45,5 +26,21 @@
 
     </div>
 </section>
+
+<section id="video-container">
+    <div class="video-overlay"></div>
+    <div class="video-content">
+        <div class="inner">
+            <span>Video Presentation</span>
+            <h2>{{ config('app.name') }}</h2>
+            <a href="https://www.youtube.com/watch?v=67n97lJcWdg" target="_blank"><i class="fa fa-play"></i></a>
+        </div>
+    </div>
+    <video autoplay="" loop="" muted>
+        <source src="{{ asset('venue-522/demo.mp4') }}" type="video/mp4" />
+    </video>
+</section>
+
+@include('partials.footer')
 
 @endsection

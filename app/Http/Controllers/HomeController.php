@@ -51,4 +51,16 @@ class HomeController extends Controller
             'categories' => $categories,
         ]);
     }
+
+    public function postDetail($slug)
+    {
+        $post = Post::where('slug', $slug)->first();
+        $categories = Category::all();
+
+        return view('pages.home.postDetail',[
+            'title' => $post->title,
+            'post' => $post,
+            'categories' => $categories,
+        ]);
+    }
 }
